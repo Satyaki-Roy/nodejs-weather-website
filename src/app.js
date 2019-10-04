@@ -3,6 +3,7 @@ const path = require("path");
 const hbs = require("hbs");
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 // Defines path for Express Config
 const publicDirectoryPath = path.join(__dirname, "../public");
@@ -43,31 +44,33 @@ const geoCode = require("./utils/geocode");
 const forecast = require("./utils/forecast");
 
 app.get("/weather", (req, res) => {
-
   if (!req.query.address) {
     return res.send({
       error: "You must provide an Address"
     });
   }
 
-  geoCode(req.query.address, (error, { Latitude, Longitude, Location } = {}) => {
-    if (error) {
-      return res.send({error});
-    }
-
-    forecast(Latitude, Longitude, (error, forecastData) => {
+  geoCode(
+    req.query.address,
+    (error, { Latitude, Longitude, Location } = {}) => {
       if (error) {
-        return res.send({error});
+        return res.send({ error });
       }
-      console.log(Location);
-      console.log(forecastData);
-      res.send({
-        forecast: forecastData,
-        location: Location,
-        addressGiven: req.query.address
+
+      forecast(Latitude, Longitude, (error, forecastData) => {
+        if (error) {
+          return res.send({ error });
+        }
+        console.log(Location);
+        console.log(forecastData);
+        res.send({
+          forecast: forecastData,
+          location: Location,
+          addressGiven: req.query.address
+        });
       });
-    });
-  });
+    }
+  );
 
   // console.log("req.query is : " + req.query);
   // res.send({
@@ -105,6 +108,6 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server is up on port 3000.");
+app.listen(port, () => {
+  console.log("Server is up on port " + port);
 });
