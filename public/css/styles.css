@@ -1,5 +1,5 @@
 body {
-  color: #333333;
+  color: #ffffff;
   font-family: arial, serif;
   max-width: 1300px;
   margin: 0 auto;
@@ -8,10 +8,14 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  background: url(https://images.unsplash.com/photo-1522800613660-62a595533961?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 footer {
-  color: #888888;
+  color: #ffffff;
   border-top: 1px solid #eeeeee;
   margin-top: 16px;
   padding: 16px 0;
